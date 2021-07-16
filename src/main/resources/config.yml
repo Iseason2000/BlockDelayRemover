@@ -1,0 +1,35 @@
+BlockRemover:
+  # 方块消失时间单位 秒
+  Period: 3600
+  #启用的世界
+  Worlds:
+    - world
+    - world_nether
+    - world_the_end
+  #玩家白名单
+  Players:
+    - Iceaso
+
+  #方块白名单,为 Material 枚举(部分)省略颜色
+  Blocks:
+    - SHULKER_BOX
+    - CHEST
+    - ENDER_CHEST
+
+
+#高度限制
+HeightLimiter:
+  #启用的世界
+  Worlds:
+    - world
+
+  # 最高与最低(包含端点)
+  MaxHeight: 255
+  MinHeight: 1
+
+
+
+
+
+
+

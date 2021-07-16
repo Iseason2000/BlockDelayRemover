@@ -1,0 +1,18 @@
+plugins {
+    id 'java'
+}
+
+group 'top.iseason'
+version '1.0'
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://hub.spigotmc.org/nexus/content/repositories/snapshots/' }
+}
+
+dependencies {
+    compileOnly 'org.spigotmc:spigot-api:1.17.1-R0.1-SNAPSHOT'
+}
+[compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
+// 插件导出目录
+libsDirName = 'E:\\mc\\1.17.1 server\\plugins'
