@@ -6,6 +6,8 @@ import top.iseason.variousfeatures.Listener.BlockRemoverListener;
 import top.iseason.variousfeatures.Listener.HeightLimiterListener;
 import top.iseason.variousfeatures.Uitls.BlockRemover;
 
+import java.io.File;
+
 /**
  * @author Iseason
  */
@@ -33,8 +35,12 @@ public class VariousFeatures extends JavaPlugin {
     public void onDisable() {
         BlockRemover.removeAll();
     }
+
     private void setupConfig() {
-        saveDefaultConfig();
+        File file = new File(getInstance().getDataFolder(), "config.yml");
+        if (!file.exists()) {
+            saveDefaultConfig();
+        }
         config = plugin.getConfig();
     }
 }
