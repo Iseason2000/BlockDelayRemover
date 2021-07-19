@@ -1,6 +1,8 @@
 BlockRemover:
   # 方块消失时间单位 秒
-  Period: 3600
+  Period: 10
+  # 检查的时间间隔 单位tick
+  CheckPeriod: 20
   #启用的世界
   Worlds:
     - world
@@ -15,18 +17,6 @@ BlockRemover:
     - SHULKER_BOX
     - CHEST
     - ENDER_CHEST
-
-
-#高度限制
-HeightLimiter:
-  #启用的世界
-  Worlds:
-    - world
-
-  # 最高与最低(包含端点)
-  MaxHeight: 255
-  MinHeight: 1
-
 
 
 

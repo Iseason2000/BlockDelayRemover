@@ -1,4 +1,4 @@
-package top.iseason.variousfeatures.Listener;
+package top.iseason.blockdelayremover.Listener;
 
 import org.bukkit.block.Block;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -6,10 +6,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.BlockBreakEvent;
-import org.bukkit.event.block.BlockDamageEvent;
 import org.bukkit.event.block.BlockPlaceEvent;
-import top.iseason.variousfeatures.Uitls.BlockRemover;
-import top.iseason.variousfeatures.VariousFeatures;
+import top.iseason.blockdelayremover.Uitls.BlockRemover;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -20,10 +18,12 @@ import java.util.List;
  */
 public class BlockRemoverListener implements Listener {
 
-    private HashSet<String> worldSet;            //启用的世界
-    private HashSet<String> playerSet;           //玩家白名单
-    private ArrayList<String> blockTypeList;      //方块白名单
-    private int delay;
+    //启用的世界
+    private final HashSet<String> worldSet;
+    //玩家白名单
+    private final HashSet<String> playerSet;
+    //方块白名单
+    private final ArrayList<String> blockTypeList;
 
     public BlockRemoverListener(FileConfiguration config) {
         List<String> worldSetList = config.getStringList("BlockRemover.Worlds");
@@ -31,7 +31,6 @@ public class BlockRemoverListener implements Listener {
         List<String> playerSetList = config.getStringList("BlockRemover.Players");
         playerSet = new HashSet<>(playerSetList);
         blockTypeList = new ArrayList<>(config.getStringList("BlockRemover.Blocks"));
-        delay = config.getInt("BlockRemover.Period") * 20;
     }
 
     @EventHandler
@@ -53,10 +52,11 @@ public class BlockRemoverListener implements Listener {
                 return;
             }
         }
-        new BlockRemover(block).runTaskLater(VariousFeatures.getInstance(), delay);
+        BlockRemover.addBlock(block);
     }
+
     @EventHandler
-    public void onBlockBreakEvent(BlockBreakEvent event){
+    public void onBlockBreakEvent(BlockBreakEvent event) {
         if (event.isCancelled()) {
             return;
         }
@@ -65,6 +65,7 @@ public class BlockRemoverListener implements Listener {
             return;
         }
         Block block = event.getBlock();
-        BlockRemover.remove(block);     //包含判断存在
+        //包含判断存在
+        BlockRemover.remove(block);
     }
 }

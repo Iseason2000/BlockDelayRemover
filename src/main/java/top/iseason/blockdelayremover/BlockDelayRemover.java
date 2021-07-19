@@ -1,25 +1,27 @@
-package top.iseason.variousfeatures;
+package top.iseason.blockdelayremover;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import top.iseason.variousfeatures.Listener.BlockRemoverListener;
-import top.iseason.variousfeatures.Listener.HeightLimiterListener;
-import top.iseason.variousfeatures.Uitls.BlockRemover;
+import org.bukkit.scheduler.BukkitTask;
+import top.iseason.blockdelayremover.Listener.BlockRemoverListener;
+import top.iseason.blockdelayremover.Uitls.BlockRemover;
 
 import java.io.File;
 
 /**
  * @author Iseason
  */
-public class VariousFeatures extends JavaPlugin {
-    private static VariousFeatures plugin;
+public class BlockDelayRemover extends JavaPlugin {
+    private static BlockDelayRemover plugin;
     private static FileConfiguration config;
+    private static int period;
+    private static BukkitTask remover;
 
     public static FileConfiguration getMyConfig() {
         return config;
     }
 
-    public static VariousFeatures getInstance() {
+    public static BlockDelayRemover getInstance() {
         return plugin;
     }
 
@@ -28,12 +30,13 @@ public class VariousFeatures extends JavaPlugin {
         plugin = this;
         setupConfig();
         getServer().getPluginManager().registerEvents(new BlockRemoverListener(config), this);
-        getServer().getPluginManager().registerEvents(new HeightLimiterListener(config), this);
+        remover = new BlockRemover().runTaskTimer(this, 0L, period);
     }
 
     @Override
     public void onDisable() {
         BlockRemover.removeAll();
+        remover.cancel();
     }
 
     private void setupConfig() {
@@ -42,5 +45,6 @@ public class VariousFeatures extends JavaPlugin {
             saveDefaultConfig();
         }
         config = plugin.getConfig();
+        period = config.getInt("BlockRemover.CheckPeriod");
     }
 }
